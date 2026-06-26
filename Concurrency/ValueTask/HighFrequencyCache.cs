@@ -13,7 +13,8 @@ public class HighFrequencyCache
         // If the user is in the cache, we return immediately.
         // Because this is a ValueTask, the result is packed into a struct on the Stack.
         // Result: 0 bytes of Garbage Collection memory allocated.
-        if (_memoryCache.TryGetValue(userId, out string? cachedName) && cachedName is not null)
+        if (_memoryCache.TryGetValue(userId, out string? cachedName)
+            && cachedName is not null)
         {
             Debug.Print("Cache Hit! Executed synchronously.");
             return cachedName;
