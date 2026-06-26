@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Concurrency/Concurrency.csproj" />
+  <Project Path="ConfigureAwaitWPF/ConfigureAwaitWPF.csproj" />
+</Solution>
