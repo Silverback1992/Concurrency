@@ -73,7 +73,7 @@ public class DomeTrainTask
 
     public DomeTrainTask ContinueWith(Action action)
     {
-        var task = new DomeTrainTask();
+        var continuationTask = new DomeTrainTask();
 
         lock (_lock)
         {
@@ -84,11 +84,11 @@ public class DomeTrainTask
                     try
                     {
                         action();
-                        task.SetResult();
+                        continuationTask.SetResult();
                     }
                     catch (Exception ex)
                     {
-                        task.SetException(ex);
+                        continuationTask.SetException(ex);
                     }
                 });
             }
@@ -99,6 +99,6 @@ public class DomeTrainTask
             }
         }
 
-        return task;
+        return continuationTask;
     }
 }
