@@ -5,7 +5,7 @@ public class DomeTrainTask
     private readonly Lock _lock = new();
     private bool _completed;
     private Exception? _exception;
-    private Action? _action;
+    private Action? _nextAction;
     private ExecutionContext? _context;
 
     public bool IsCompleted
@@ -35,19 +35,18 @@ public class DomeTrainTask
             _completed = true;
             _exception = exception;
 
-            if (_action == null)
+            if (_nextAction == null)
             {
                 return;
             }
 
             if (_context == null)
             {
-                _action.Invoke();
+                _nextAction.Invoke();
                 return;
             }
 
-            ExecutionContext.Run(_context, state => ((Action?)state)?.Invoke(), _action);
-
+            ExecutionContext.Run(_context, state => ((Action?)state)?.Invoke(), _nextAction);
         }
     }
 
@@ -94,7 +93,7 @@ public class DomeTrainTask
             }
             else
             {
-                _action = action;
+                _nextAction = action;
                 _context = ExecutionContext.Capture();
             }
         }

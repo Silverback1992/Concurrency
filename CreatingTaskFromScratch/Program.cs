@@ -7,6 +7,8 @@ var task = DomeTrainTask.Run(() =>
     Console.WriteLine($"First DomeTrainTask Id: {Environment.CurrentManagedThreadId} is running the task.");
 });
 
+//Console.ReadLine();
+
 task.ContinueWith(() =>
 {
     DomeTrainTask.Run(() =>
