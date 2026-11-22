@@ -3,4 +3,5 @@
   <Project Path="ConfigureAwaitWPF/ConfigureAwaitWPF.csproj" />
   <Project Path="CreatingTaskFromScratch/CreatingTaskFromScratch.csproj" Id="fe34ca25-2098-4ef6-bc5d-cbdd75ad23e7" />
   <Project Path="GetLibraries/GetLibraries.csproj" Id="6b08f15e-62fb-49aa-9148-b7140c27902e" />
+  <Project Path="IsBackgroundTest/IsBackgroundTest.csproj" Id="75f38b68-1146-40b5-9ca0-2b3d7ffd20d0" />
 </Solution>

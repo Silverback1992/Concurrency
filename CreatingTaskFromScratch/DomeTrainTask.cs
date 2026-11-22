@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CreatingTaskFromScratch;
+﻿namespace CreatingTaskFromScratch;
 
 public class DomeTrainTask
 {
     private readonly Lock _lock = new();
     private bool _completed;
     private Exception? _exception;
+    private Action? _action;
+    private ExecutionContext? _context;
 
     public bool IsCompleted
     {
@@ -21,7 +19,11 @@ public class DomeTrainTask
         }
     }
 
-    public void SetResult()
+    public void SetResult() => CompleteTask(null);
+
+    public void SetException(Exception exception) => CompleteTask(exception);
+
+    private void CompleteTask(Exception? exception)
     {
         lock (_lock)
         {
@@ -31,19 +33,21 @@ public class DomeTrainTask
             }
 
             _completed = true;
-        }
-    }
+            _exception = exception;
 
-    public void SetException(Exception exception)
-    {
-        lock (_lock)
-        {
-            if (_completed)
+            if (_action == null)
             {
-                throw new InvalidOperationException("Task is already completed.");
+                return;
             }
 
-            _exception = exception;
+            if (_context == null)
+            {
+                _action.Invoke();
+                return;
+            }
+
+            ExecutionContext.Run(_context, state => ((Action?)state)?.Invoke(), _action);
+
         }
     }
 
@@ -63,6 +67,37 @@ public class DomeTrainTask
                 task.SetException(ex);
             }
         });
+
+        return task;
+    }
+
+    public DomeTrainTask ContinueWith(Action action)
+    {
+        var task = new DomeTrainTask();
+
+        lock (_lock)
+        {
+            if (_completed)
+            {
+                ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    try
+                    {
+                        action();
+                        task.SetResult();
+                    }
+                    catch (Exception ex)
+                    {
+                        task.SetException(ex);
+                    }
+                });
+            }
+            else
+            {
+                _action = action;
+                _context = ExecutionContext.Capture();
+            }
+        }
 
         return task;
     }

@@ -1,10 +1,20 @@
 ﻿using CreatingTaskFromScratch;
 
-Console.WriteLine($"Current Thread Id: {Thread.CurrentThread.ManagedThreadId}");
+Console.WriteLine($"Starting Thread Id: {Environment.CurrentManagedThreadId}");
 
-DomeTrainTask.Run(() =>
+var task = DomeTrainTask.Run(() =>
 {
-    Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} is running the task.");
+    Console.WriteLine($"First DomeTrainTask Id: {Environment.CurrentManagedThreadId} is running the task.");
+});
+
+task.ContinueWith(() =>
+{
+    DomeTrainTask.Run(() =>
+    {
+        Console.WriteLine($"Third DomeTrainTask Id: {Environment.CurrentManagedThreadId} is running the task.");
+    });
+
+    Console.WriteLine($"Second DomeTrainTask Id: {Environment.CurrentManagedThreadId} is running the task.");
 });
 
 Console.ReadLine();
