@@ -2,7 +2,7 @@
 
 Console.WriteLine($"Thread id: {Environment.CurrentManagedThreadId}");
 
-await Derp().ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+await Derp().ConfigureAwait(ConfigureAwaitOptions.ForceYielding | ConfigureAwaitOptions.None);
 
 Console.WriteLine($"Thread id: {Environment.CurrentManagedThreadId}");
 
