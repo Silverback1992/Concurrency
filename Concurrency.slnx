@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="Concurrency/Concurrency.csproj" />
   <Project Path="ConfigureAwaitWPF/ConfigureAwaitWPF.csproj" />
+  <Project Path="ConsoleApp1/ConsoleApp1.csproj" Id="179c0906-68a3-4993-8f37-564421e21638" />
   <Project Path="CreatingTaskFromScratch/CreatingTaskFromScratch.csproj" Id="fe34ca25-2098-4ef6-bc5d-cbdd75ad23e7" />
   <Project Path="CreatingTaskFromScratch2/CreatingTaskFromScratch2.csproj" Id="519ce5ac-52bd-4d05-91b9-96a4d83082e0" />
   <Project Path="CreatingTaskFromScratch3/CreatingTaskFromScratch3.csproj" Id="e548ae6f-edf8-4c62-9b0c-6a13ff5b8f64" />
